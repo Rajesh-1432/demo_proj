@@ -4,7 +4,11 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import mongoose from "mongoose";
 import multer from "multer";
+import { fileURLToPath } from 'url';
 import path from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -15,24 +19,20 @@ const storage = multer.diskStorage({
   },
 });
 
-const __dirname = path.dirname(new URL(import.meta.url).pathname);
-const buildpath = path.join(__dirname, '../client/dist');
-
-
 export const upload = multer({
   storage,
 });
 
 dotenv.config({
-  path: "./.env",
+  path: path.resolve(__dirname, "./.env"),
 });
 
 const app = express();
+const PORT = process.env.PORT || 8000;
+
 const connect = async () => {
   try {
-    const connectionInstance = await mongoose.connect(
-      `${process.env.MONGODB_URI}`
-    );
+    const connectionInstance = await mongoose.connect(process.env.MONGODB_URI);
     console.log(`MongoDB connected !!`);
   } catch (error) {
     console.log("MONGODB connection FAILED ", error);
@@ -42,11 +42,14 @@ const connect = async () => {
 
 connect();
 
-app.use(cors({}));
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
 app.use(express.json({ limit: "16kb" }));
 app.use(express.urlencoded({ extended: true, limit: "16kb" }));
-app.use(express.static("public"));
+
+// Adjust the path to your client's dist directory
+const clientDistPath = path.resolve(__dirname, '..', '..', 'demo_project', 'client', 'dist');
+app.use(express.static(clientDistPath));
 
 const statusSchema = new mongoose.Schema({
   selectId: String,
@@ -64,12 +67,6 @@ const Status = mongoose.model("Status", statusSchema);
 
 app.post(
   "/api/v1/save-status",
-  // upload.fields([
-  //   {
-  //     name: "file",
-  //     maxCount: 1,
-  //   },
-  // ]),
   async (req, res) => {
     try {
       const { notification, selectId, type } = req.body;
@@ -111,10 +108,11 @@ app.post("/api/v1/save-all-data", async (req, res) => {
   }
 });
 
-app.get("/*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../client/dist", "index.html"));
+app.get("*", (req, res) => {
+  // Adjust the path to your client's index.html file
+  res.sendFile(path.join(clientDistPath, 'index.html'));
 });
 
-app.listen(process.env.PORT || 8000, () => {
-  console.log(`⚙️ Server is running at port : ${process.env.PORT}`);
+app.listen(PORT, () => {
+  console.log(`⚙️ Server is running at port : ${PORT}`);
 });
