@@ -1,0 +1,67 @@
+::placeholder {
+  color: white !important;
+  opacity: 1; /* Firefox */
+}
+
+::-ms-input-placeholder {
+  /* Edge 12 -18 */
+  color: white !important;
+}
+
+:root {
+  scroll-behavior: smooth;
+}
+
+* {
+  font-family: "Open Sans", sans-serif;
+}
+body {
+  font-family: "Open Sans", sans-serif;
+  background: #f6f9ff;
+  color: #444444;
+}
+
+.status-tabs .ant-tabs-nav-list {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.status-tabs .ant-tabs-tab.ant-tabs-tab .ant-tabs-tab-btn {
+  color: #fff !important;
+  font-weight: 500;
+  background-color: #4a87bf !important;
+  border-radius: 4px;
+  padding: 10px 28px;
+}
+
+.status-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+  color: #fff !important;
+  background-color: #2b699f !important;
+  padding: 10px 28px;
+  border-radius: 4px;
+  font-weight: 500;
+}
+.ant-tabs-tab.ant-tabs-tab .ant-tabs-tab-btn {
+  /* color: #0d6efd !important; */
+  font-weight: 400;
+  border-radius: 4px;
+  padding: 10px 20px;
+}
+
+.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+  color: #000000 !important;
+  padding: 10px 20px;
+  border-radius: 4px;
+  font-weight: 400;
+}
+
+.ant-tabs-card > .ant-tabs-nav .ant-tabs-tab {
+  padding: 0;
+}
+
+.ant-tabs-card-active > .ant-tabs-nav .ant-tabs-tab {
+  padding: 0;
+  color: #0d6ef0 !important;
+}
