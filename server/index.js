@@ -47,8 +47,8 @@ app.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
 app.use(express.json({ limit: "16kb" }));
 app.use(express.urlencoded({ extended: true, limit: "16kb" }));
 
-// Adjust the path to your client's dist directory
-const clientDistPath = path.resolve(__dirname, '..', '..', 'demo_project', 'client', 'dist');
+
+const clientDistPath = path.resolve(__dirname, '..', '..', 'demo_proj', 'client', 'dist');
 app.use(express.static(clientDistPath));
 
 const statusSchema = new mongoose.Schema({
@@ -67,6 +67,12 @@ const Status = mongoose.model("Status", statusSchema);
 
 app.post(
   "/api/v1/save-status",
+    // upload.fields([
+  //   {
+  //     name: "file",
+  //     maxCount: 1,
+  //   },
+  // ]),
   async (req, res) => {
     try {
       const { notification, selectId, type } = req.body;

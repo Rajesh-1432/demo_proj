@@ -62,9 +62,9 @@ const HomePage = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
 
-  // useEffect(() => {
-  //   if (!user) navigate("/login");
-  // }, []);
+  useEffect(() => {
+    if (!user) navigate("/login");
+  }, []);
 
   const [file, setFile] = useState(null);
 
